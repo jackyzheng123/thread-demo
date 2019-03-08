@@ -170,7 +170,7 @@ public class NewFeature {
      * toList
      */
     @Test
-    public void toListTest(){
+    public void toListTest() {
         List<Person> data = Data.getPersonList();
         List<String> collect = data.stream()
                 .map(Person::getName)
@@ -182,7 +182,7 @@ public class NewFeature {
      * toSet
      */
     @Test
-    public void toSetTest(){
+    public void toSetTest() {
         List<Person> data = Data.getPersonList();
         Set<String> collect = data.stream()
                 .map(Person::getName)
@@ -194,7 +194,7 @@ public class NewFeature {
      * toMap
      */
     @Test
-    public void toMapTest(){
+    public void toMapTest() {
         List<Person> data = Data.getPersonList();
         Map<String, Integer> collect = data.stream()
                 .collect(
@@ -203,8 +203,8 @@ public class NewFeature {
         System.out.println(collect);
 
         Map<String, String> collect1 = data.stream()
-                .collect(Collectors.toMap(per->per.getName(), value->{
-                    return value+"1";
+                .collect(Collectors.toMap(per -> per.getName(), value -> {
+                    return value + "1";
                 }));
         System.out.println(collect1);
     }
@@ -213,7 +213,7 @@ public class NewFeature {
      * 指定类型
      */
     @Test
-    public void toTreeSetTest(){
+    public void toTreeSetTest() {
         List<Person> data = Data.getPersonList();
         TreeSet<Person> collect = data.stream()
                 .collect(Collectors.toCollection(TreeSet::new));
@@ -224,7 +224,7 @@ public class NewFeature {
      * 分组
      */
     @Test
-    public void toGroupTest(){
+    public void toGroupTest() {
         List<Person> data = Data.getPersonList();
         Map<Boolean, List<Person>> collect = data.stream()
                 .collect(Collectors.groupingBy(per -> "男".equals(per.getSex())));
@@ -235,7 +235,7 @@ public class NewFeature {
      * 分隔
      */
     @Test
-    public void toJoiningTest(){
+    public void toJoiningTest() {
         List<Person> data = Data.getPersonList();
         String collect = data.stream()
                 .map(person -> person.getName())
@@ -247,7 +247,7 @@ public class NewFeature {
      * 自定义
      */
     @Test
-    public void reduce(){
+    public void reduce() {
         List<String> collect = Stream.of("1", "2", "3").collect(
                 Collectors.reducing(new ArrayList<String>(), x -> Arrays.asList(x), (y, z) -> {
                     y.addAll(z);
@@ -258,9 +258,9 @@ public class NewFeature {
 
     /**
      * 调试
-     *
+     * <p>
      * list.map.fiter.map.xx 为链式调用，最终调用collect(xx)返回结果
-     *
+     * <p>
      * 分惰性求值和及早求值
      * 通过peek可以查看每个值，同时能继续操作流
      */
@@ -269,8 +269,61 @@ public class NewFeature {
         List<Person> data = Data.getPersonList();
 
         //peek打印出遍历的每个per
-        data.stream().map(person->person.getName()).peek(p->{
+        data.stream().map(person -> person.getName()).peek(p -> {
             System.out.println(p);
         }).collect(toList());
+    }
+
+    /**
+     * 排序(sort)
+     */
+    @Test
+    public void sortTest() {
+        List<Integer> list = Arrays.asList(1, 3, 4, 0, 9, 8, 5);
+        Stream<Integer> sorted = list.stream().sorted();
+        sorted.forEach(System.out::print);
+        System.out.println();
+
+        // 指定比较规则,按姓名排序,姓名相同的再根据年龄排序
+        List<Person> data = Data.getPersonList();
+        data.stream()
+                .sorted((x, y) -> {
+                    if (x.getAge() == y.getAge()) {
+                        return x.getName().compareTo(y.getName());
+                    } else {
+                        return Integer.compare(x.getAge(), y.getAge());
+                    }
+                }).forEach(System.out::println);
+    }
+
+    /**
+     * filter : 接受Lambda,从流中排除某些元素
+     *
+     * limit(n) : 返回流中前n个元素
+     *
+     * skip(n) : 跳过流中前n个元素
+     *
+     * distinct : 去掉流中重复元素(通过hashCode和equles方法判断是否为相同对象)
+     */
+    @Test
+    public void test() {
+        List<Person> list = Data.getPersonList();
+
+        //filter 过滤出大于40岁的人
+        List<Person> temp = list.stream().filter(person -> person.getAge() > 40).collect(toList());
+        System.out.println(temp);
+
+        //limit 获取列表前3个人
+        Stream<Person> limit1 = list.stream().limit(3);
+        limit1.forEach(System.out::println);
+
+        //skip 去掉前3个员工
+        Stream<Person> limit2 = list.stream().skip(3);
+        limit2.forEach(System.out::println);
+
+        // distinct 去掉流中重复元素
+        List<Integer> items = Arrays.asList(1, 1, 2, 2, 3, 3, 3, 3, 4, 5, 6);
+        Stream<Integer> distinct = items.stream().distinct();//去掉重复元素
+        distinct.forEach(System.out::print);
     }
 }

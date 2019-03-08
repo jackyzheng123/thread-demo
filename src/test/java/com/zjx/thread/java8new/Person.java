@@ -67,4 +67,13 @@ public class Person implements Comparable {
         Person p = (Person)o;
         return this.age - p.age;                      // 升序排列，反之降序
     }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", sex='" + sex + '\'' +
+                '}';
+    }
 }
