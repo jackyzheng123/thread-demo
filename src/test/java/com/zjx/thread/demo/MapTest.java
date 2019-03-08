@@ -13,14 +13,14 @@ import java.util.concurrent.ConcurrentHashMap;
  **/
 public class MapTest {
 
-    public static void main (String[] args){
+    public static void main(String[] args) {
         Map<String, Object> map1 = new HashMap<>();
         Map<String, Object> map2 = new Hashtable<>();
         Map<String, Object> map3 = new ConcurrentHashMap<>();
 
-        map1.put("zjx","zjx");
-        map2.put("zjx","zjx");
-        map3.put("zjx","zjx");
+        map1.put("zjx", "zjx");
+        map2.put("zjx", "zjx");
+        map3.put("zjx", "zjx");
 
     }
 }

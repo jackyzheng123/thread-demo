@@ -12,6 +12,7 @@ import java.util.LinkedList;
 public class ConnectionPool {
 
     private LinkedList<Connection> pool = new LinkedList<Connection>();
+
     public ConnectionPool(int initialSize) {
         if (initialSize > 0) {
             for (int i = 0; i < initialSize; i++) {
@@ -19,6 +20,7 @@ public class ConnectionPool {
             }
         }
     }
+
     public void releaseConnection(Connection connection) {
         if (connection != null) {
             synchronized (pool) {
@@ -28,6 +30,7 @@ public class ConnectionPool {
             }
         }
     }
+
     // 在mills内无法获取到连接，将会返回null
     public Connection fetchConnection(long mills) throws InterruptedException {
         synchronized (pool) {

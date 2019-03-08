@@ -33,7 +33,7 @@ public class FairAndUnfairTest {
     private void testLock(Lock lock) {
 // 启动5个Job（略）
         for (int i = 0; i < 5; i++) {
-            Job job= new Job(lock);
+            Job job = new Job(lock);
             job.start();
             try {
                 Thread.sleep(1);

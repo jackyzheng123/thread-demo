@@ -8,13 +8,13 @@ package com.zjx.thread.demo;
  **/
 public class Synchronized {
 
-    public static void main (String[] args){
-        synchronized (Synchronized.class){
+    public static void main(String[] args) {
+        synchronized (Synchronized.class) {
         }
         syncMethod();
     }
 
-    private static synchronized void syncMethod(){
+    private static synchronized void syncMethod() {
     }
 
 }
