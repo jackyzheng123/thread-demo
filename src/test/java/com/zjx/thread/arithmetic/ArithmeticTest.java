@@ -17,10 +17,11 @@ public class ArithmeticTest {
 
     public static void main(String[] args) {
 
-        int[] a = {1, 23, 4, 8, 13, 7, 12, 43, 11, 17, 5};
+        int[] a = {55, 34, 1, 23, 4, 8, 13, 7, 12, 43, 11, 17, 5};
         // 冒泡排序
         System.out.println("排序前：" + showArray(a));
-        int[] b = bubbleSort(a);
+//        int[] b = bubbleSort(a);
+        int[] b = selectSort(a);
         System.out.println("排序后：" + showArray(b));
 
         // 顺序
@@ -134,26 +135,55 @@ public class ArithmeticTest {
 
     /**
      * 冒泡排序
+     * <p>
+     * 第一个元素与其他剩余元素做比较，如果第一个元素大于其他元素，则交换两者位置，... 如此类推，第二个，第三个
+     * <p>
+     * 时间复杂度：O(n) - O(n^2)
      *
-     * @param a
+     * @param arr
      * @return
      */
-    public static int[] bubbleSort(int[] a) {
-        for (int i = 0; i < a.length; i++) {
-            for (int j = i + 1; j < a.length; j++) {
-                if (a[i] > a[j]) {
-//                    int temp = a[i];
-//                    a[i] = a[j];
-//                    a[j] = temp;
+    public static int[] bubbleSort(int[] arr) {
+        for (int i = 0; i < arr.length; i++) { //外层循环控制排序趟数
+            for (int j = i + 1; j < arr.length; j++) { //内层循环控制每一趟排序多少次
+                if (arr[i] > arr[j]) {
+//                    int temp = arr[i];
+//                    arr[i] = arr[j];
+//                    arr[j] = temp;
                     // 改成异或运算交换位置
-                    a[i] = a[i] ^ a[j];
-                    a[j] = a[i] ^ a[j];
-                    a[i] = a[i] ^ a[j];
+                    arr[i] = arr[i] ^ arr[j];
+                    arr[j] = arr[i] ^ arr[j];
+                    arr[i] = arr[i] ^ arr[j];
                 }
             }
         }
-        return a;
+        return arr;
     }
+
+    /**
+     * 选择排序
+     *
+     * 每次选出最小的放前面
+     * 时间复杂度：
+     */
+    public static int[] selectSort(int[] arr) {
+        for(int i = 0; i < arr.length - 1; i++) {// 做第i趟排序
+            int k = i;
+            for(int j = k + 1; j < arr.length; j++){// 选最小的记录
+                if(arr[j] < arr[k]){
+                    k = j; //记下目前找到的最小值所在的位置
+                }
+            }
+            //在内层循环结束，也就是找到本轮循环的最小的数以后，再进行交换
+            if(i != k){  //交换a[i]和a[k]
+                int temp = arr[i];
+                arr[i] = arr[k];
+                arr[k] = temp;
+            }
+        }
+        return arr;
+    }
+
 
     /**
      * 遍历数组
