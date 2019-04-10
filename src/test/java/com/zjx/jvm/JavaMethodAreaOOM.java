@@ -1,4 +1,4 @@
-package com.zjx.thread.jvm;
+package com.zjx.jvm;
 
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;

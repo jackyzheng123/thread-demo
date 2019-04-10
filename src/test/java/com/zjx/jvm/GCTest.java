@@ -1,4 +1,4 @@
-package com.zjx.thread.jvm;
+package com.zjx.jvm;
 
 /**
  * @Description 测试内存分配、回收策略

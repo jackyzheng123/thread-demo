@@ -1,4 +1,4 @@
-package com.zjx.thread.java8new;
+package com.zjx.java8new;
 
 import java.util.Arrays;
 import java.util.List;

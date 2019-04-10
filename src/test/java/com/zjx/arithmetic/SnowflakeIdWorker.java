@@ -1,4 +1,4 @@
-package com.zjx.thread.arithmetic;
+package com.zjx.arithmetic;
 
 /**
  * @Description

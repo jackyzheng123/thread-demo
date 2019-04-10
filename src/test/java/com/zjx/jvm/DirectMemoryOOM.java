@@ -1,4 +1,4 @@
-package com.zjx.thread.jvm;
+package com.zjx.jvm;
 
 import sun.misc.Unsafe;
 

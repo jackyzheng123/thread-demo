@@ -1,4 +1,4 @@
-package com.zjx.thread.jvm;
+package com.zjx.jvm;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -25,9 +25,9 @@ public class SemaphoreTest {
                 @Override
                 public void run() {
                     try {
-                        s.acquire();
+                        s.acquire(); // acquire()用来获取一个许可，若无许可能够获得，则会一直等待，直到获得许可。
                         System.out.println("save data");
-                        s.release();
+                        s.release(); // release()用来释放许可。注意，在释放许可之前，必须先获获得许可。
                     } catch (InterruptedException e) {
                     }
                 }

@@ -1,4 +1,4 @@
-package com.zjx.thread.jvm;
+package com.zjx.jvm;
 
 /**
  * @Description 虚拟机栈、本地方法栈OOM测试

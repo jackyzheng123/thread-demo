@@ -1,4 +1,4 @@
-package com.zjx.thread;
+package com.zjx;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
