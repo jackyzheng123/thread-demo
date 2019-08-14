@@ -3,6 +3,8 @@ package com.zjx.java8new;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -210,7 +212,7 @@ public class NewFeature {
     }
 
     /**
-     * 指定类型
+     * 指定类型Collectors.toCollection
      */
     @Test
     public void toTreeSetTest() {
@@ -221,7 +223,7 @@ public class NewFeature {
     }
 
     /**
-     * 分组
+     * 分组Collectors.groupingBy
      */
     @Test
     public void toGroupTest() {
@@ -232,7 +234,7 @@ public class NewFeature {
     }
 
     /**
-     * 分隔
+     * 分隔Collectors.joining
      */
     @Test
     public void toJoiningTest() {
@@ -298,11 +300,11 @@ public class NewFeature {
 
     /**
      * filter : 接受Lambda,从流中排除某些元素
-     *
+     * <p>
      * limit(n) : 返回流中前n个元素
-     *
+     * <p>
      * skip(n) : 跳过流中前n个元素
-     *
+     * <p>
      * distinct : 去掉流中重复元素(通过hashCode和equles方法判断是否为相同对象)
      */
     @Test
@@ -326,4 +328,43 @@ public class NewFeature {
         Stream<Integer> distinct = items.stream().distinct();//去掉重复元素
         distinct.forEach(System.out::print);
     }
+
+
+    /**
+     * Predicate测试: test()方法接受一个泛型参数, 进行某些逻辑判断并返回一个boolean值
+     */
+    @Test
+    public void testPredicate() {
+        Predicate<Integer> pre = x -> x >= 5;
+        System.out.println(pre.test(9));//输出结果为true
+    }
+
+    /**
+     * Java8之前，没用Consumer接口
+     */
+    @Test
+    public void test1() {
+        Person person = new Person();
+        person.setName("zm");
+        this.change(person);
+        System.out.println(person.getName()); //输出zmChange
+    }
+
+    private void change(Person person) {
+        person.setName("zmChange");
+    }
+
+    /**
+     * Consumer测试: accept()方法接受一个泛型参数, 改变值
+     */
+    @Test
+    public void testConsumer(){
+        Person person = new Person();
+        person.setName("zm");
+        //接受一个参数
+        Consumer<Person> personConsumer = person1 -> person1.setName("zmChange");
+        personConsumer.accept(person);
+        System.out.println(person.getName());//输出zmChange
+    }
+
 }
