@@ -367,4 +367,23 @@ public class NewFeature {
         System.out.println(person.getName());//输出zmChange
     }
 
+    /**
+     * 元组测试
+     */
+    @Test
+    public void testTuple(){
+        List<Person> personList = Data.getPersonList();
+        int total = personList.size();
+
+        List<Person> femaleList = personList.stream().filter(x -> ("女".equals(x.getSex()))).collect(toList());
+
+        ThreeTuple<List<Person>, List<Person>, Integer> threeTuple = TupleUtil.tuple(personList, femaleList, total);
+        List<Person> totalList = threeTuple.first;
+        List<Person> feList = threeTuple.second;
+
+        System.out.println("总人数：" + totalList);
+        System.out.println("女性人数：" + feList);
+        System.out.println("统计人数：" + threeTuple.third);
+    }
+
 }
