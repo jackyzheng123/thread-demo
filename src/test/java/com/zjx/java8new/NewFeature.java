@@ -314,19 +314,29 @@ public class NewFeature {
         //filter 过滤出大于40岁的人
         List<Person> temp = list.stream().filter(person -> person.getAge() > 40).collect(toList());
         System.out.println(temp);
+        System.out.println("============================");
 
         //limit 获取列表前3个人
         Stream<Person> limit1 = list.stream().limit(3);
         limit1.forEach(System.out::println);
+        System.out.println("============================");
 
         //skip 去掉前3个员工
         Stream<Person> limit2 = list.stream().skip(3);
         limit2.forEach(System.out::println);
+        System.out.println("============================");
 
         // distinct 去掉流中重复元素
         List<Integer> items = Arrays.asList(1, 1, 2, 2, 3, 3, 3, 3, 4, 5, 6);
         Stream<Integer> distinct = items.stream().distinct();//去掉重复元素
         distinct.forEach(System.out::print);
+        System.out.println("\n============================");
+
+        // List<Person>转成Map<String, Person>
+        Map<String, Person> map = list.stream().collect(Collectors.toMap(Person::getName, a -> a, (k1, k2) -> k1));
+        map.forEach((key, value) -> {
+            System.out.println("key=" + key + "， value=" + value);
+        });
     }
 
 
