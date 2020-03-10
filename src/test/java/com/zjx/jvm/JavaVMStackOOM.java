@@ -3,7 +3,7 @@ package com.zjx.jvm;
 /**
  * @Description 创建线程导致OOM
  *
- * -Xss2M 设置每个线程的堆栈大小
+ * -Xss2M 设置每个线程的栈大小
  *
  * @Author Carson Cheng
  * @Date 2019/3/19 16:33

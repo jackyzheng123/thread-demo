@@ -47,7 +47,15 @@ public class GCTest {
 
     /**
      * 大对象直接进入老年代
-     * --XX:PretenureSizeThreshold=3145728  (3M) 设置大于3M的对象直接进入老年代
+     *
+     * VM参数：
+     * -Xms20M 最小堆内存
+     * -Xmx20M 最大堆内存
+     * -Xmn10M 新生代内存
+     * -XX:+PrintGCDetails 收集器日志参数
+     * -XX:SurvivorRatio=8 新生代中Eden区与一个Survivor区空间比例为8:1, 即新生代10M中，Eden区占了8M
+     *
+     * -XX:PretenureSizeThreshold=3145728  (3M) 设置大于3M的对象直接进入老年代
      */
     public static void testPretenureSizeThreshold() {
         byte[] allocation;
@@ -79,8 +87,15 @@ public class GCTest {
      * 动态对象年龄判定
      * Survivor区相同年龄的所有对象大小总和大于Survivor区的一半，年龄大于或等于该年龄的对象直接进入老年代，无须等到MaxTenuringThreshold要求的年龄
      *
-     * <p>
-     * -XX:MaxTenuringThreshold=15
+     * VM参数：
+     * -Xms20M 最小堆内存
+     * -Xmx20M 最大堆内存
+     * -Xmn10M 新生代内存
+     * -XX:+PrintGCDetails 收集器日志参数
+     * -XX:SurvivorRatio=8 新生代中Eden区与一个Survivor区空间比例为8:1, 即新生代10M中，Eden区占了8M
+     *
+     * -XX:MaxTenuringThreshold=15  默认15
+     * -XX:+PrintTenuringDistribution
      */
     public static void testTenuringThreshold2() {
         byte[] allocation1, allocation2, allocation3, allocation4;
@@ -94,11 +109,42 @@ public class GCTest {
         allocation4 = new byte[4 * _1MB];
     }
 
+    /**
+     * 空间分配担保
+     *
+     * VM参数：
+     * -Xms20M 最小堆内存
+     * -Xmx20M 最大堆内存
+     * -Xmn10M 新生代内存
+     * -XX:+PrintGCDetails 收集器日志参数
+     * -XX:SurvivorRatio=8 新生代中Eden区与一个Survivor区空间比例为8:1, 即新生代10M中，Eden区占了8M
+     *
+     * -XX:-HandlePromotionFailure
+     */
+    public static void testHandlePromotion() {
+        byte[] allocation1, allocation2, allocation3, allocation4, allocation5, allocation6, allocation7;
+
+        allocation1 = new byte[2 * _1MB];
+        allocation2 = new byte[2 * _1MB];
+        allocation3 = new byte[2 * _1MB];
+        allocation1 = null;
+
+        allocation4 = new byte[2 * _1MB];
+        allocation5 = new byte[2 * _1MB];
+        allocation6 = new byte[2 * _1MB];
+
+        allocation4 = null;
+        allocation5 = null;
+        allocation6 = null;
+        allocation7 = new byte[2 * _1MB];
+    }
+
     public static void main(String[] args) {
 //        testAllocation();
 //        testPretenureSizeThreshold();
 //        testTenuringThreshold();
-        testTenuringThreshold2();
+//        testTenuringThreshold2();
+        testHandlePromotion();
     }
 
 }

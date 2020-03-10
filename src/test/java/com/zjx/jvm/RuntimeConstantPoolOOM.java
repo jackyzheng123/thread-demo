@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 方法区、运行时常量池内存溢出
+ *
  * @Description 运行时常量池导致的OOM
  *
  * 设置方法区内存大小：
