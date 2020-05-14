@@ -2,11 +2,12 @@ package com.zjx.thread.controller;
 
 import com.google.common.util.concurrent.RateLimiter;
 import com.zjx.thread.annotation.RateLimit;
+import com.zjx.thread.annotation.RedisLimit;
 import com.zjx.thread.entity.ResultJson;
+import com.zjx.thread.enums.LimitType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.TimeUnit;
@@ -20,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  **/
 @RestController
 @Slf4j
-public class RateLimitTestController {
+public class LimitTestController {
 
     // 每秒产生10个令牌
     RateLimiter rateLimiter = RateLimiter.create(10);
@@ -70,4 +71,17 @@ public class RateLimitTestController {
         return ResultJson.ok(200, "成功");
     }
 
+
+    private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger();
+
+    /**
+     * Redis分布式限流测试
+     *
+     * @return
+     */
+    @RedisLimit(key = "limitTest", period = 100, count = 10, limitType = LimitType.IP) // 意味著 100S 内最多允許訪問10次
+    @GetMapping("/limitTest")
+    public int testLimiter() {
+        return ATOMIC_INTEGER.incrementAndGet();
+    }
 }

@@ -12,8 +12,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +22,7 @@ import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @Description
+ * @Description 基于guava的RateLimiter（单进程）限流切面
  * @Author Carson Cheng
  * @Date 2020/5/13 17:29
  * @Version V1.0
@@ -65,9 +63,9 @@ public class RateLimitAspect {
         String functionName = msig.getName(); // 注解所在方法名区分不同的限流策略
 
         //获取rateLimiter
-        if(map.containsKey(functionName)){
+        if (map.containsKey(functionName)) {
             rateLimiter = map.get(functionName);
-        }else {
+        } else {
             map.put(functionName, RateLimiter.create(limitNum));
             rateLimiter = map.get(functionName);
         }
