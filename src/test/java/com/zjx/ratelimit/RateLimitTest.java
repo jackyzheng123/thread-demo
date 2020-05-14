@@ -14,8 +14,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * 限流算法：
- * 令牌桶
- * 漏桶
+ * 令牌桶: 能够限制数据的平均传输速率外，还允许某种程度的突发传输
+ * 漏桶: 水（请求）先进入到漏桶里，漏桶以一定的速度出水，当水流入速度过大会直接溢出，可以看出漏桶算法能强行限制数据的传输速率。
  *
  * @Description 限流测试
  * @Author Carson Cheng
