@@ -33,47 +33,47 @@ public class ThreadPoolUtils {
     /**
      * 采用ThreadFactory管理线程
      */
-    private static final ThreadFactory sThreadFactory = new ThreadFactory() {
+    private static final ThreadFactory threadFactory = new ThreadFactory() {
         /**
          * 线程index
          */
-        private final AtomicInteger mCount = new AtomicInteger(1);
+        private final AtomicInteger count = new AtomicInteger(1);
 
         /**
          * {@inheritDoc}
          */
         @Override
         public Thread newThread(Runnable r) {
-            return new Thread(r, "Framework lib Thread #" + mCount.getAndIncrement());
+            return new Thread(r, "Framework lib Thread #" + count.getAndIncrement());
         }
     };
 
     /**
      * 提交到线程池的Runnable队列
      */
-    private static final BlockingQueue<Runnable> sPoolWorkQueue = new LinkedBlockingQueue<Runnable>(10);
+    private static final BlockingQueue<Runnable> poolWorkQueue = new LinkedBlockingQueue<Runnable>(10);
 
     /**
      * 线程池
      */
-    private static final ThreadPoolExecutor sExecutor = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE,
-        KEEP_ALIVE, TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);
+    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE,
+        KEEP_ALIVE, TimeUnit.SECONDS, poolWorkQueue, threadFactory);
 
     /**
      * 获取线程池
      * 
      * @return 线程池
      */
-    public static Executor getExecutor() {
-        return sExecutor;
+    public static ThreadPoolExecutor getExecutor() {
+        return executor;
     }
 
     /**
      * 关闭线程池
      */
     public static void shutdown() {
-        if (!sExecutor.isShutdown()) {
-            sExecutor.shutdown();
+        if (!executor.isShutdown()) {
+            executor.shutdown();
         }
     }
 }
