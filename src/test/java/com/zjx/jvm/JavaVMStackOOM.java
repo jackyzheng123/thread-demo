@@ -1,7 +1,7 @@
 package com.zjx.jvm;
 
 /**
- * @Description 创建线程导致OOM
+ * @Description 循环创建线程导致OOM
  *
  * -Xss2M 设置每个线程的栈大小
  *
