@@ -1,9 +1,17 @@
 package com.zjx.thread.demo;
 
-import java.util.concurrent.TimeUnit;
-
 /**
- * 应用：AOP方法执行前后调用begin end方法
+ * <p>
+ * ThreadLocal源码中的存储的是Map的结构（ThreadLocalMap<ThreadLocal, value>），
+ * key是弱引用，value是强引用，因为如果触发GC，弱引用会被标记回收，也就是说，
+ * 这个ThreadLocal没法被使用，但又会有强引用的存在，又不会被回收，因此就处于需要回收，
+ * 但又回收不掉的状态，就会出现内存泄漏
+ * <p>
+ *
+ * 参考WeakRefDemo
+ * 强引用：普通的引用，强引用指向的对象不会被回收；
+ * 软引用：仅有软引用指向的对象，只有发生gc且内存不足，才会被回收；
+ * 弱引用：仅有弱引用指向的对象，只要发生gc就会被回收。
  *
  * @Description ThreadLocal
  * @Author Carson Cheng
@@ -11,24 +19,21 @@ import java.util.concurrent.TimeUnit;
  * @Version V1.0
  **/
 public class ThreadLocalTest {
-    // 第一次get()方法调用时会进行初始化（如果set方法没有调用），每个线程会调用一次
-    private static final ThreadLocal<Long> TIME_THREADLOCAL = new ThreadLocal<Long>() {
-        protected Long initialValue() {
-            return System.currentTimeMillis();
-        }
-    };
 
-    public static final void begin() {
-        TIME_THREADLOCAL.set(System.currentTimeMillis());
-    }
+    private final static ThreadLocal threadLocal = new ThreadLocal();
 
-    public static final long end() {
-        return System.currentTimeMillis() - TIME_THREADLOCAL.get();
-    }
+    public static void main(String[] args) {
+        threadLocal.set("hello");
+        System.out.println("main thread:" + threadLocal.get());
 
-    public static void main(String[] args) throws Exception {
-        ThreadLocalTest.begin();
-        TimeUnit.SECONDS.sleep(1);
-        System.out.println("Cost: " + ThreadLocalTest.end() + " mills");
+        new Thread(() -> {
+            threadLocal.set("zjx");
+            System.out.println("new Thread1:" + threadLocal.get());
+        }).start();
+
+        new Thread(() -> {
+            threadLocal.set("carson");
+            System.out.println("new Thread2:" + threadLocal.get());
+        }).start();
     }
 }

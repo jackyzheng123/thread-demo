@@ -1,4 +1,4 @@
-package com.zjx.thread.demo1;
+package com.zjx.thread.sync;
 
 import java.util.concurrent.CountDownLatch;
 

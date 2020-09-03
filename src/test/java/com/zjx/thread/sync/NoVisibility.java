@@ -1,4 +1,4 @@
-package com.zjx.thread.demo1;
+package com.zjx.thread.sync;
 
 /**
  * 重排序

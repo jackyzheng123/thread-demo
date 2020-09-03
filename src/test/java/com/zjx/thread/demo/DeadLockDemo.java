@@ -55,8 +55,8 @@ public class DeadLockDemo {
         //new DeadLockDemo().deadLock1();
 
         // ReadWriteLock
-        //new DeadLockDemo().readWriteLock1();
-        new DeadLockDemo().readWriteLock2();
+        new DeadLockDemo().readWriteLock1();
+        //new DeadLockDemo().readWriteLock2();
     }
 
     /**
@@ -67,6 +67,7 @@ public class DeadLockDemo {
      */
     private void readWriteLock1() {
         rwLock.readLock().lock();
+        //rwLock.readLock().unlock(); // 没有释放读锁
         System.out.println("get read lock");
         rwLock.writeLock().lock();
         System.out.println("blocking");
